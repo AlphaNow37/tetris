@@ -17,7 +17,7 @@ main {
 
 #tetris-grid {
   height: 100%;
-  aspect-ratio: 0.5;
+  aspect-ratio: 1;
   background-color: #FA7;
   border: 3px dotted #F20;
 }
@@ -30,7 +30,7 @@ main {
 
 .end-overlay {
   background-color: #500;
-  opacity: 0.8;
+  opacity: 0.85;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -62,15 +62,21 @@ main {
 }
 #left-bar {
   transform: translate(calc(-100% - 5px), 0);
-  background-color: #800;
-  border: black solid 2px;
   padding: 5px;
   width: max-content;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: unset;
-  min-height: 100%;
 }
+#red-box {
+  background-color: #800;
+  border: black solid 2px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 5px;
+}
+
 #scores {
   display: flex;
   flex-direction: column;
@@ -81,4 +87,13 @@ main {
   margin: 1px;
   font-size: 15px;
   text-align: right;
+}
+#left-bar input {
+  background-color: #B30;
+  color: white;
+  border: black solid 1px;
+}
+#left-bar input::placeholder {
+  color: #FD8;
+  text-align: center;
 }

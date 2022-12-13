@@ -9,17 +9,20 @@
 </head>
 
 <body>
-  <h1>Tetris !</h1>
+<!--   <button onclick="localStorage.setItem('scores', '[]'); _scores=[]; update_scores()">clear</button> -->
   <main>
     <div style="position: relative"><div id="left-bar">
-      <p class="user-score">ChuckNorris: ∞+1</p>
-      <div id="scores">
-        <p class="user-score">Cis: ∞+1</p>
-        <p class="user-score">C1</p>
+      <h1>Tetris !</h1>
+      <div id="red-box">
+        <input type="text" placeholder="Your username ..." id="username-input">
+        <p class="user-score">ChuckNorris: ∞+1</p>
+        <div id="scores">
+        </div>
       </div>
     </div></div>
     <table id="tetris-grid"></table>
     <div style="position: relative"><div id="right-bar">
+      <button onlick="newGame()">↻ Reset</button>
       <p id="score"></p>
       <p id="speed"></p>
     </div></div>

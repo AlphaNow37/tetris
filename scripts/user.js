@@ -1,18 +1,29 @@
 
-const GOD = ["AlphaNow", 1]
-let _scores = [
-  GOD
-]
+let username_input = document.getElementById("username-input")
+
+let stored = localStorage.getItem("scores")
+let _scores = JSON.parse(stored ?? "[]")
+const GOD = ["AlphaNow", Math.max(_scores.map(
+  ([_, s]) => s
+)) + 1]
 
 let _scores_html = document.getElementById("scores")
 
-function update_scores() {
-  _scores_html.innerHTML = ""
-  for(let [username, score] of _scores) {
+function addBar(username, score) {
     let elt = document.createElement("p")
     elt.classList.add("user-score")
     elt.textContent = username + ": " + score
     _scores_html.appendChild(elt)
+}
+
+function update_scores() {
+  let to_store = JSON.stringify(_scores)
+  localStorage.setItem("scores", to_store)
+  
+  _scores_html.innerHTML = ""
+  addBar(...GOD)
+  for(let [username, score] of _scores) {
+    addBar(username, score)
   }
 }
 function addScore(username, score) {
@@ -34,7 +45,9 @@ function addScore(username, score) {
   _scores.sort((a, b) => b[1] - a[1])
   update_scores()
 }
-addScore("AA", 12)
-addScore("AA", 15)
-addScore("BB", 5)
 
+update_scores()
+
+function addUserScore(score) {
+  addScore(username_input.value || "You", score)
+}

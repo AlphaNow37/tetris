@@ -11,7 +11,7 @@ function update_score_speed() {
 const grid_html = document.getElementById("tetris-grid")
 let grid
 
-const WIDTH = 10
+const WIDTH = 20
 const HEIGHT = 20
 
 function clearGrid() {
@@ -57,7 +57,12 @@ function update() {
 update()
 
 document.addEventListener("keydown", (e) => {
-  if(is_end) {return}
+  if(is_end) {
+    if (e.code == "Enter") {
+      on_newgame_choice()
+    }
+    return
+  }
   
   if (e.code == "ArrowLeft" || e.code == "KeyA") {
     piece.move_left()
@@ -74,11 +79,19 @@ document.addEventListener("keydown", (e) => {
   }
 })
 
+let end_element
+function on_newgame_choice() {
+  end_element.remove()
+  newGame()
+}
+
 function end() {
+  addUserScore(score)
+  
   console.log("end")
   is_end = true
 
-  let end_element = document.createElement("span")
+  end_element = document.createElement("span")
   
   let game_over_text = document.createElement("h2")
   game_over_text.textContent = "Game Over ..."
@@ -89,11 +102,8 @@ function end() {
   end_element.appendChild(score_text)
 
   let newgame_button = document.createElement("button")
-  newgame_button.onclick = () => {
-    end_element.remove()
-    newGame()
-  }
-  newgame_button.textContent = "-> New game"
+  newgame_button.onclick = on_newgame_choice
+  newgame_button.textContent = "↻ New game"
   end_element.appendChild(newgame_button)
   
   end_element.classList.add("end-overlay")

@@ -23,11 +23,26 @@ function swap(x1, y1, x2, y2) {
   setAt(x2, y2, c1)
 }
 
+function generateRandomRels(n) {
+  let actuals = [[0, 0]]
+  for(let i=1; i<n; i++) {
+    let pos = actuals[0]
+    while(actuals.some(([x, y]) => x==pos[0] && y==pos[1])) {
+      [x, y] = actuals[Math.floor(Math.random()*i)]
+      let [x_, y_] = [[0, 1], [1, 0], [0, -1], [-1, 0]][Math.floor(Math.random()*4)]
+      pos = [x+x_, y+y_]
+    }
+    actuals.push(pos)
+  }
+  return actuals
+}
+
 RELS = [
-  [[0, -1], [0, 0], [0, 1]],
-  [[0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]],
-  [[0, -1], [0, 0], [0, 1]],
-  [[0, -1], [0, 0], [1, 0]],
+  // [[0, -1], [0, 0], [0, 1]],
+  // [[0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]],
+  // [[0, -1], [0, 0], [0, 1]],
+  // [[0, -1], [0, 0], [1, 0]],
+  [[-1, 0], [1, 0], [0, 0], [0, -1]]
 ]
 
 function is_visible(x, y) {
@@ -61,8 +76,9 @@ function delete_full_rows() {
 
 class Piece {
   static random() {
-    let n = Math.floor(Math.random() * 4)
-    return new Piece(RELS[n], randomColor(), Math.random() * (WIDTH-4)+2)
+    let n = Math.floor(Math.random() * RELS.length)
+    let rels = generateRandomRels(5)
+    return new Piece(rels, randomColor(), Math.random() * (WIDTH-4)+2)
   }
   constructor(rels, color, center_x) {
     this.rels = rels
