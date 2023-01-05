@@ -9,10 +9,11 @@ body h1 {
 }
 
 main {
-  height: 80vh;
-  margin: 0 auto;
+  max-height: 90vh;
+  margin: 0 0 0 200px;
   display: flex;
-  width: min-content;
+  max-width: calc(100% - 200px - 150px);
+  aspect-ratio: 1;
 }
 
 #tetris-grid {
@@ -26,6 +27,7 @@ main {
   border: 1px dotted #F20;
   background-color: #FA7;
   aspect-ratio: 1;
+  width: 2px;
 }
 
 .end-overlay {
@@ -56,10 +58,36 @@ main {
   position: absolute;
   left: 0;
   top: 0;
-  width: 100px;
   height: 100%;
   padding: 10px;
 }
+#right-bar input, button {
+  background: #C20;
+  color: white;
+  border: white solid 1px;
+}
+#right-bar button:hover {
+  background: #F20;
+}
+#right-bar {
+  width: max-content;
+}
+input[type="range"] {
+  overflow: hidden;
+  width: calc(100% - 40px);
+  background-color: #C20;
+  color: green;
+  -webkit-appearance: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  width: 10px;
+  -webkit-appearance: none;
+  height: 10px;
+  cursor: ew-resize;
+  background: black;
+  box-shadow: -80px 0 0 80px #700;
+}
+
 #left-bar {
   transform: translate(calc(-100% - 5px), 0);
   padding: 5px;

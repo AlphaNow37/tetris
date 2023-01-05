@@ -26,7 +26,6 @@ function clearGrid() {
       let cell = document.createElement("th")
       cell.classList.add("cell")
       html_line.appendChild(cell)
-      cell.textContent = "X"
       line.push(null)
     }
   }
@@ -75,13 +74,16 @@ document.addEventListener("keydown", (e) => {
   } else if (e.code == "ArrowDown" || e.code == "KeyS") {
     nb_moves = piece.move_full_down()
     piece = Piece.random()
-    score += nb_moves
+    score += Math.floor(nb_moves / 3)
   }
 })
 
-let end_element
+let end_element = null
 function on_newgame_choice() {
-  end_element.remove()
+  if (end_element !== null) {
+    end_element.remove()
+    end_element = null
+  }
   newGame()
 }
 

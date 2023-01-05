@@ -6,6 +6,9 @@ let _scores = JSON.parse(stored ?? "[]")
 const GOD = ["AlphaNow", Math.max(_scores.map(
   ([_, s]) => s
 )) + 1]
+if(GOD[1] == NaN) {
+  GOD[1] = 1
+}
 
 let _scores_html = document.getElementById("scores")
 

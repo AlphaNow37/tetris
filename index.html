@@ -22,7 +22,15 @@
     </div></div>
     <table id="tetris-grid"></table>
     <div style="position: relative"><div id="right-bar">
-      <button onlick="newGame()">↻ Reset</button>
+      <button onclick="on_newgame_choice()">↻ Reset</button>
+      <p>Taille blocks: (1→10) <br>
+        <input type="range" value="5" step="1" min="1" max="10" oninput="document.getElementById('choice_block_size').textContent = this.value; PIECE_SIZE = this.value">
+        <txt id=choice_block_size style='margin:0'>5</txt>
+      </p>
+      <p>Difficultée: (1→10) <br>
+        <input type="range" value="1" min="1" max="10" oninput="document.getElementById('choice_diff').textContent = this.value; ACC_FACTOR = 1-(this.value/100)">
+        <txt id=choice_diff style='margin:0'>5</txt>
+      </p>
       <p id="score"></p>
       <p id="speed"></p>
     </div></div>

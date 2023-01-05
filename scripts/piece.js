@@ -1,3 +1,6 @@
+let PIECE_SIZE = 5
+let ACC_FACTOR = 0.9
+
 function randomColor() {
   color = 60
   for(;(30 < color && color < 90);) {
@@ -37,14 +40,6 @@ function generateRandomRels(n) {
   return actuals
 }
 
-RELS = [
-  // [[0, -1], [0, 0], [0, 1]],
-  // [[0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]],
-  // [[0, -1], [0, 0], [0, 1]],
-  // [[0, -1], [0, 0], [1, 0]],
-  [[-1, 0], [1, 0], [0, 0], [0, -1]]
-]
-
 function is_visible(x, y) {
   return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT
 }
@@ -76,14 +71,17 @@ function delete_full_rows() {
 
 class Piece {
   static random() {
-    let n = Math.floor(Math.random() * RELS.length)
-    let rels = generateRandomRels(5)
-    return new Piece(rels, randomColor(), Math.random() * (WIDTH-4)+2)
+    let rels = generateRandomRels(PIECE_SIZE)
+    let mini_x = -Math.min(...rels.map(([x, y]) => x)) + 1
+    let max_x = Math.max(...rels.map(([x, y]) => x)) + 1
+    let delta = WIDTH - max_x - mini_x
+    let center = mini_x + Math.random() * delta
+    return new Piece(rels, randomColor(), center)
   }
   constructor(rels, color, center_x) {
     this.rels = rels
     this.cell = new Cell(color)
-    this.center = [center_x, -2]
+    this.center = [center_x, -1]
   }
   down1() {
     if(this.doCollide(([x, y]) => [x, y+1])) {
@@ -119,10 +117,11 @@ class Piece {
     }
   }
   doCollide(transform) {
-    for (let [x, y] of this.get_visible_pos()) {
+    for (let [x, y] of this.get_abs_pos()) {
       [x, y] = transform([x, y])
+      if (y < 0) {continue}
       if(
-        !is_visible(x, y) 
+        !is_visible(x, y)
         || (grid[y][x] !== null && grid[y][x] !== this.cell)) {
           return true
       }
@@ -180,6 +179,6 @@ class Piece {
       end()
     }
     score += 10
-    freq *= 0.95
+    freq *= ACC_FACTOR
   }
 }
